@@ -12,12 +12,24 @@ module.exports = {
       userId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        field: 'user_id'
+        field: 'user_id',
+        references: {
+          model: 'Users',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       },
       sellerId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        field: 'saller_id'
+        field: 'saller_id',
+        references: {
+          model: 'Users',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       },
       totalPrice: {
         type: Sequelize.DECIMAL(9,2),
