@@ -15,18 +15,21 @@ const validateBody = (data) => {
 });
   const { email, password } = data;
   const { error, value } = schema.validate({ email, password });
-
   if (error) throwMyError(StatusCodes.NOT_FOUND, 'Dados inválidos');
 
   return value;
 };
 
 const validateCredentials = async ({ email, password }) => {
-    const user = await users.findOne({ where: { email } });
-    passwordService.checkPassword(password, user.password);
-    const { id } = user;
+  const user = await users.findOne({ where: { email } });
 
-    return true;
+  if (!user) throwMyError(StatusCodes.NOT_FOUND, 'Usuário não cadastrado');
+
+  const valide = passwordService.checkPassword(password, user.password);
+
+  if(!valide) throwMyError(StatusCodes.NOT_FOUND, 'Valide');
+
+    return user;
 };
 
 
