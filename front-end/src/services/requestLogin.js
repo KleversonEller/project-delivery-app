@@ -12,8 +12,6 @@ const requestLogin = async (email, password) => {
 
     const result = await response.json();
 
-    if (result.message) return false;
-
     return result;
   } catch (err) {
     return false;
