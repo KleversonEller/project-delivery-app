@@ -1,8 +1,7 @@
 const Joi = require('joi');
-const { User } = require('../database/models/index');
+const { users } = require('../database/models/index');
 
 const passwordService = require('../services/password.service');
-const jwtService = require('./jwtService');
 
 const validateBody = (data) => {
     const schema = Joi.object({
@@ -22,17 +21,11 @@ const validateBody = (data) => {
 };
 
 const validateCredentials = async ({ email, password }) => {
-    const user = await User.findOne({ where: { email } });
-    const check = passwordService.checkPassword(password, user.password);
-    if (!check) {
-      const e = new Error('Invalid fields');
-      e.name = 'NOT_FOUND';
-      throw e;
-    }
+    const user = await users.findOne({ where: { email } });
+    passwordService.checkPassword(password, user.password);
     const { id } = user;
-    const token = jwtService.createToken({ data: email, id });
 
-    return { token };
+    return true;
 };
 
 

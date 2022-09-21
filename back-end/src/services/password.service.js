@@ -1,21 +1,16 @@
-const bcrypt = require('bcrypt');
-
-const encryptPassword = (password) => {
-    const salt = bcrypt.genSaltSync(5);
-    const encryptedPassword = bcrypt.hashSync(password, salt);
-    return encryptedPassword;
-  }
+const md5 = require('md5');
 
 const checkPassword = (password, passwordDb) => {
-    const isMatch = bcrypt.compareSync(password, passwordDb);
+    const isMatch = md5(password) === passwordDb;
     if (!isMatch) {
-      const e = new Error('Usuário não existe ou senha inválida');
-      e.name = 'UnauthorizedError';
+      const e = new Error('Invalid fields');
+      e.name = 'NOT_FOUND';
       throw e;
     }
+    return isMatch;
 }
 
 
 module.exports = {
-    encryptPassword, checkPassword
+    checkPassword
 };
