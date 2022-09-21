@@ -1,28 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
+import requestLogin from '../services/requestLogin';
 
 export default function Login() {
+  const history = useHistory();
   const [userEmail, setUserEmail] = useState('');
   const [password, setPassword] = useState('');
   const [cantSubmit, setCantSubmit] = useState(true);
 
   useEffect(() => {
+    if (history.location.pathname === '/') {
+      history.push('/login');
+    }
     const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
     const testuserEmail = regex.test(userEmail);
     const min = 5;
     if (testuserEmail && password.length > min) setCantSubmit(false);
     else setCantSubmit(true);
-  }, [userEmail, password]);
+  }, [userEmail, password, history]);
 
-  const history = useHistory();
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const obj = { email: userEmail };
     localStorage.setItem('mealsToken', '1');
     localStorage.setItem('cocktailsToken', '1');
     localStorage.setItem('user', JSON.stringify(obj));
-    history.push('/register');
+    const user = await requestLogin(userEmail, password);
+    if (user) history.push('/register');
     return true;
   };
 
@@ -37,7 +42,7 @@ export default function Login() {
       <section>
         <label htmlFor="userEmail">
           <input
-            data-testids="common_login__input-email"
+            data-testid="common_login__input-email"
             placeholder="Type your email"
             type="email"
             id="userEmail"
@@ -47,7 +52,7 @@ export default function Login() {
         </label>
         <label htmlFor="pass">
           <input
-            data-testids="common_login__input-password"
+            data-testid="common_login__input-password"
             placeholder="Type your password"
             type="password"
             id="pass"
@@ -57,19 +62,17 @@ export default function Login() {
         </label>
       </section>
       <Button
-        data-testids="common_login__button-login"
+        data-testid="common_login__button-login"
         className="login_btn"
         type="submit"
-        data-testid="login-submit-btn"
         disabled={ cantSubmit }
       >
         LOGIN
       </Button>
       <Button
-        data-testids="common_login__button-register"
+        data-testid="common_login__button-register"
         className="login_btn"
         type="submit"
-        data-testid="login-submit-btn"
         disabled={ cantSubmit }
       >
         Ainda não tenho conta
