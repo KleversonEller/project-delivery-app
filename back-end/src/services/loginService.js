@@ -1,7 +1,9 @@
 const Joi = require('joi');
 const { users } = require('../database/models/index');
+const { StatusCodes } = require('http-status-codes');
 
 const passwordService = require('../services/password.service');
+const throwMyError = require('../utils/throwMyError');
 
 const validateBody = (data) => {
     const schema = Joi.object({
@@ -13,10 +15,9 @@ const validateBody = (data) => {
 });
   const { email, password } = data;
   const { error, value } = schema.validate({ email, password });
-  if (error) {
-    const customError = { name: 'NOT_FOUND', message: error.details[0].message };
-    throw customError;
-  } 
+
+  if (error) throwMyError(StatusCodes.NOT_FOUND, 'Dados inválidos');
+
   return value;
 };
 
