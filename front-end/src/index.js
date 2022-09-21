@@ -11,8 +11,6 @@ ReactDOM.render(
     <Provider>
       <App />
     </Provider>
-    {' '}
-
   </BrowserRouter>,
   document.getElementById('root'),
 );
