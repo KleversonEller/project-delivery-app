@@ -1,11 +1,11 @@
 'use strict';
 
 module.exports = (sequelize, DataTypes) => {
-  const Sales = sequelize.define('Sales', {
+  const Sales = sequelize.define('sales', {
     id: {
-      autoIncrement: true,
+      type: DataTypes.INTEGER,
       primaryKey: true,
-      type: DataTypes.INTEGER
+      autoIncrement: true
     },
     userId: {
       type: DataTypes.INTEGER,
@@ -15,24 +15,23 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       foreignKey: true,
     },
-    totalPrice: DataTypes.DECIMAL(9,2),
-    deliveryAddress: DataTypes.STRING(100),
-    deliveryNumber: DataTypes.STRING(50),
-    saleDate: DataTypes.STRING(50),
-    status: DataTypes.STRING(50),
+    totalPrice: DataTypes.DECIMAL,
+    deliveryAddress: DataTypes.STRING,
+    deliveryNumber: DataTypes.STRING,
+    saleDate: DataTypes.DATE,
+    status: DataTypes.STRING,
   }, {
-    tableName: 'Sales',
     timestamps: false,
     underscored: true,
   });
 
   Sales.associate = (models) => {
-    Sales.belongsTo(models.Users, [
+    Sales.belongsTo(models.users, [
       {
-        as: 'user', foreignKey: 'userId',
+        as: 'users', foreignKey: 'userId',
       },
       {
-        as: 'user', foreignKey: 'sellerId',
+        as: 'sellers', foreignKey: 'sellerId',
       },
     ]);
   }

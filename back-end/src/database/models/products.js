@@ -4,23 +4,23 @@ const {
 } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  const Product = sequelize.define('Products', {
+  const Product = sequelize.define('products', {
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: true
+      primaryKey: true,
+      autoIncrement: true
     },
     name: DataTypes.STRING,
-    price: DataTypes.STRING,
+    price: DataTypes.DECIMAL,
     urlImage: DataTypes.STRING,
   }, {
-    tableName: 'Products',
-    timestamps: false,
     underscored: true,
+    timestamps: false
   });
 
-  Product.associate = (models) => {
-    Product.hasMany(models.SalesProducts, {as: 'salesProducts', foreignKey: 'productId'})
-  }
+  // Product.associate = (models) => {
+  //   Product.hasMany(models.SalesProducts, {as: 'salesProducts', foreignKey: 'productId'})
+  // }
 
   return Product;
 };

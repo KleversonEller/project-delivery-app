@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Products', {
+    await queryInterface.createTable('products', {
       id: {
         allowNull: false,
         primaryKey: true,
@@ -10,21 +10,22 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
-        type: Sequelize.STRING(100),
+        type: Sequelize.STRING,
         allowNull: false
       },
       price: {
+        allowNull: false,
         type: Sequelize.DECIMAL(4,2)
       },
       urlImage: {
         allowNull: false,
-        type: Sequelize.STRING(200),
+        type: Sequelize.STRING,
         field: 'url_image'
       },
     });
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Products');
+    await queryInterface.dropTable('products', {});
   }
 };
