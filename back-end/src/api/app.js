@@ -5,8 +5,8 @@ const cors = require('cors');
 const rescue = require('express-rescue');
 const helmet = require('helmet');
 const morgan = require('morgan');
-const router = require('./../routes/index');
-const errorHandler = require('./../middleware/errorMiddleware');
+const router = require('../routes/index');
+const errorHandler = require('../middleware/errorMiddleware');
 
 const app = express();
 

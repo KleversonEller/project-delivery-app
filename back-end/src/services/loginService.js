@@ -1,8 +1,8 @@
 const Joi = require('joi');
-const { users } = require('../database/models/index');
 const { StatusCodes } = require('http-status-codes');
+const { users } = require('../database/models/index');
 
-const passwordService = require('../services/password.service');
+const passwordService = require('./password.service');
 const throwMyError = require('../utils/throwMyError');
 
 const validateBody = (data) => {
@@ -27,11 +27,10 @@ const validateCredentials = async ({ email, password }) => {
 
   const valide = passwordService.checkPassword(password, user.password);
 
-  if(!valide) throwMyError(StatusCodes.NOT_FOUND, 'Valide');
+  if (!valide) throwMyError(StatusCodes.NOT_FOUND, 'Valide');
 
     return user;
 };
-
 
   module.exports = {
     validateCredentials,

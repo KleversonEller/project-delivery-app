@@ -1,8 +1,8 @@
 class PersonalError extends Error {
-    constructor(status,message){
+    constructor(status, message) {
         super(message);
-        this.status = status
+        this.status = status;
     }
 }
 
-module.exports = PersonalError
+module.exports = PersonalError;
