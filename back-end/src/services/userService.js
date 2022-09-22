@@ -1,7 +1,7 @@
 const Joi = require('joi');
 const { StatusCodes } = require('http-status-codes');
 const { users } = require('../database/models/index');
-const { encryptPassword } = require('../utils/md5')
+const { encryptPassword } = require('../utils/md5');
 const { createToken } = require('../utils/jwt');
 const throwMyError = require('../utils/throwMyError');
 
@@ -12,7 +12,6 @@ const userSchema = Joi.object({
 });
 
 const createUser = async (user) => {
-  console.log(user.email)
   const { error } = userSchema.validate(user);
 
   if (error) throwMyError(StatusCodes.BAD_REQUEST, 'Dados inválidos');
@@ -34,4 +33,3 @@ const createUser = async (user) => {
 module.exports = { 
   createUser,
 };
- 

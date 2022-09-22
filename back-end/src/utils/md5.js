@@ -7,4 +7,4 @@ const encryptPassword = (password) => {
 
 module.exports = {
  encryptPassword,
-}
+};

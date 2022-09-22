@@ -1,7 +1,7 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const { StatusCodes } = require('http-status-codes');
-const throwMyError = require('../utils/throwMyError');
+const throwMyError = require('./throwMyError');
 
 const createToken = ({ email, role }) => {
   const token = jwt.sign({ data: { email, role } }, process.env.JWT_SECRET, {
@@ -16,7 +16,7 @@ const checkToken = (token) => {
     const { data } = jwt.verify(token, process.env.JWT_SECRET);
     return data;
   } catch (_err) {
-    throwMyError(StatusCodes.UNAUTHORIZED,'Token expirado ou inválido');
+    throwMyError(StatusCodes.UNAUTHORIZED, 'Token expirado ou inválido');
   }
 };
 
