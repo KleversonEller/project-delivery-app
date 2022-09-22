@@ -16,6 +16,7 @@ app.use(cors());
 
 app.use(router.loginRouter);
 app.use(router.productsRouter);
+
 app.use(errorHandler);
 
 module.exports = app;
