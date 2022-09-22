@@ -8,9 +8,8 @@ const checkPassword = (password, passwordDb) => {
     if (!isMatch) throwMyError(StatusCodes.NOT_FOUND, 'Invalid fields');
 
     return isMatch;
-}
-
+};
 
 module.exports = {
-    checkPassword
+    checkPassword,
 };
