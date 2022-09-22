@@ -71,7 +71,7 @@ function Register() {
       {(errorMessage) && (
         <Notification
           message={ errorMessage }
-          dataTestId="common_login__element-invalid-email"
+          dataTestId="common_register__element-invalid_register"
         />
       )}
     </>
