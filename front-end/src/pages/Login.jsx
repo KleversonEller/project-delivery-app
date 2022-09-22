@@ -13,9 +13,9 @@ export default function Login() {
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    if (history.location.pathname === '/') {
-      history.push('/login');
-    }
+    if (history.location.pathname === '/') history.push('/login');
+
+    setErrorMessage('');
     const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
     const testuserEmail = regex.test(userEmail);
     const min = 5;
@@ -79,15 +79,16 @@ export default function Login() {
           className="login_btn"
           type="button"
           onClick={ () => { history.push('/register'); } }
-          disabled={ cantSubmit }
         >
           Ainda não tenho conta
         </Button>
       </form>
-      <Notification
-        message={ errorMessage }
-        dataTestId="common_login__element-invalid-email"
-      />
+      {(errorMessage) && (
+        <Notification
+          message={ errorMessage }
+          dataTestId="common_login__element-invalid-email"
+        />
+      )}
     </>
   );
 }
