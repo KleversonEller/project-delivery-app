@@ -2,11 +2,10 @@ require('express-async-errors');
 const express = require('express');
 
 const cors = require('cors');
-const rescue = require('express-rescue');
 const helmet = require('helmet');
 const morgan = require('morgan');
-const router = require('../routes/index');
 const errorHandler = require('../middleware/errorMiddleware');
+const router = require('../routes/index');
 
 const app = express();
 
@@ -15,7 +14,8 @@ app.use(helmet());
 app.use(morgan('common'));
 app.use(cors());
 
-app.use('/login', rescue(router.loginRouter));
+app.use(router.loginRouter);
+app.use(router.productsRouter);
 app.use(errorHandler);
 
 module.exports = app;
