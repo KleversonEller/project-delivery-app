@@ -16,6 +16,7 @@ app.use(morgan('common'));
 app.use(cors());
 
 app.use('/login', rescue(router.loginRouter));
+app.use('/user', rescue(router.userRouter));
 app.use(errorHandler);
 
 module.exports = app;
