@@ -5,6 +5,7 @@ import manualOperationProduct
   from '../helpers/manualOperationProductToShoppingCart';
 import operationProduct from '../helpers/operationProduct';
 import saveProductAtShoppingCart from '../helpers/saveProductAtShoppingCart';
+import styles from './cardProducts.module.css';
 // import { Link } from 'react-router-dom';
 
 export default function CardFood(props) {
@@ -48,7 +49,7 @@ export default function CardFood(props) {
     //   className="card_container"
     //   style={ { textDecoration: 'none' } }
     // >
-    <div>
+    <div className={ styles['product-card-container'] }>
       <p data-testid={ `customer_products__element-card-title-${id}` }>
         {name}
       </p>
@@ -56,7 +57,7 @@ export default function CardFood(props) {
         data-testid={ `customer_products__img-card-bg-image-${id}` }
         src={ urlImage }
         alt="search"
-        style={ { width: '50px' } }
+        style={ { width: '100px', height: '18rem', objectFit: 'cover' } }
       />
       <p data-testid={ `customer_products__element-card-price-${id}` }>
         R$
@@ -75,6 +76,7 @@ export default function CardFood(props) {
         data-testid={ `customer_products__input-card-quantity-${id}` }
         value={ quantity }
         onChange={ handleChange }
+        readOnly
       />
 
       <button
