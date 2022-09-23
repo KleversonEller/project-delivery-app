@@ -1,6 +1,8 @@
 const Joi = require('joi');
 const { StatusCodes } = require('http-status-codes');
 const { users } = require('../database/models/index');
+const { createToken } = require('../utils/jwt');
+
 
 const passwordService = require('./password.service');
 const throwMyError = require('../utils/throwMyError');
@@ -24,12 +26,12 @@ const validateCredentials = async ({ email, password }) => {
   const user = await users.findOne({ where: { email } });
 
   if (!user) throwMyError(StatusCodes.NOT_FOUND, 'Usuário não cadastrado');
-
+  
   const valide = passwordService.checkPassword(password, user.password);
 
-  if (!valide) throwMyError(StatusCodes.NOT_FOUND, 'Valide');
-
-    return user;
+  if (!valide) throwMyError(StatusCodes.NOT_FOUND, 'Usuário não encontrado');
+  const token = createToken({ user });
+    return { ...user.dataValues, token };
 };
 
   module.exports = {
