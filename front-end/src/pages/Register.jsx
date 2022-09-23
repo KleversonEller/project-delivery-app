@@ -26,11 +26,13 @@ function Register() {
   }, [name, email, password]);
 
   const handleSubmit = async (e) => {
+    console.log(e);
     e.preventDefault();
-    const user = await requestCreateUser(name, email, password);
-    console.log(user);
-    if (!user.message) return history.push(userRoutes[user.role]);
-    setErrorMessage(user.message);
+    if (name && email && password) {
+      const user = await requestCreateUser(name, email, password);
+      if (!user.message) history.push(userRoutes[user.role]);
+      setErrorMessage(user.message);
+    }
   };
 
   return (

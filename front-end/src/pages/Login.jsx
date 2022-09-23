@@ -25,13 +25,14 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const obj = { email: userEmail };
-    localStorage.setItem('mealsToken', '1');
-    localStorage.setItem('cocktailsToken', '1');
-    localStorage.setItem('user', JSON.stringify(obj));
+
     const user = await requestLogin(userEmail, password);
-    console.log(user);
-    if (!user.message) return history.push(userRoutes[user.role]);
+
+    if (!user.message) {
+      localStorage.setItem('user', JSON.stringify(user));
+      return history.push(userRoutes[user.role]);
+    }
+
     setErrorMessage(user.message);
   };
 
