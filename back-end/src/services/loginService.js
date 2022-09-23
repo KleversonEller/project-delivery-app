@@ -3,7 +3,6 @@ const { StatusCodes } = require('http-status-codes');
 const { users } = require('../database/models/index');
 const { createToken } = require('../utils/jwt');
 
-
 const passwordService = require('./password.service');
 const throwMyError = require('../utils/throwMyError');
 
