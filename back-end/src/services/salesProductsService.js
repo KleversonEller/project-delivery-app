@@ -1,4 +1,6 @@
+const { StatusCodes } = require('http-status-codes');
 const { sales: salesProductsModel } = require('../database/models');
+const throwMyError = require('../utils/throwMyError');
 
 class SalesProductsService {
   constructor() {
@@ -6,8 +8,7 @@ class SalesProductsService {
   }
   
   async createSales(sales) {
-    const { id, userId, sallerId, totalPrice, deliveryAddress, deliveryNumber, saleDate, status } = sales;
-
+    const { sallerId } = sales;
 
   if (await this.model.findOne({ where: { sallerId } })) {
     throwMyError(StatusCodes.CONFLICT, 'Venda cadastrada');
