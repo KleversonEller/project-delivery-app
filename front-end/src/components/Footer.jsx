@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import calculatesTotalPrice from '../helpers/calculatesTotalPrice';
-import convertToBrasilianCurrency from '../helpers/convertToBrasilianCurrency';
+import convertToBrazilianCurrency from '../helpers/convertToBrazilianCurrency';
 
 export default function Footer(props) {
   const history = useHistory();
@@ -28,7 +28,7 @@ export default function Footer(props) {
             Ver Carrinho:
             {' R$'}
             <span data-testid="customer_products__checkout-bottom-value">
-              { convertToBrasilianCurrency(totalPrice) }
+              { convertToBrazilianCurrency(totalPrice) }
             </span>
           </button>
         </footer>

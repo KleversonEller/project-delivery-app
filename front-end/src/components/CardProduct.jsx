@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import convertToBrasilianCurrency from '../helpers/convertToBrasilianCurrency';
+import convertToBrazilianCurrency from '../helpers/convertToBrazilianCurrency';
 import manualOperationProduct
   from '../helpers/manualOperationProductToShoppingCart';
 import operationProduct from '../helpers/operationProduct';
@@ -61,7 +61,7 @@ export default function CardFood(props) {
       />
       <p data-testid={ `customer_products__element-card-price-${id}` }>
         R$
-        {convertToBrasilianCurrency(price)}
+        {convertToBrazilianCurrency(price)}
       </p>
 
       <button
