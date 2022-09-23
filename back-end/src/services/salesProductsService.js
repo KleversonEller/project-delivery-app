@@ -6,13 +6,13 @@ class SalesProductsService {
   }
   
   async createSales(sales) {
-    const { id, user_id, saller_id, total_price, delivery_adress, delivery_number, sale_date, status } = sales;
+    const { id, userId, sallerId, totalPrice, deliveryAddress, deliveryNumber, saleDate, status } = sales;
 
 
-  if (await salesProductsModel.findOne({ where: { saller_id } })) {
+  if (await this.model.findOne({ where: { sallerId } })) {
     throwMyError(StatusCodes.CONFLICT, 'Venda cadastrada');
   }
-  const newSales = await salesProductsModel.create({ ...sales });
+  const newSales = await this.model.create({ ...sales });
   return newSales;
   }
 }
