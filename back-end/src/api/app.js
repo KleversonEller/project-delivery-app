@@ -18,6 +18,7 @@ app.use(cors());
 
 app.use(router.loginRouter);
 app.use(router.productsRouter);
+app.use(router.userRoutes);
 app.use(express.static('public'));
 
 app.use(errorHandler);
