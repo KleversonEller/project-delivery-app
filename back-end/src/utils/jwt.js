@@ -1,10 +1,12 @@
 require('dotenv').config();
+const fs = require('fs')
 const jwt = require('jsonwebtoken');
 const { StatusCodes } = require('http-status-codes');
 const throwMyError = require('./throwMyError');
+const senha = fs.readFileSync('jwt.evaluation.key');
 
 const createToken = ({ email, role }) => {
-  const token = jwt.sign({ data: { email, role } }, process.env.JWT_SECRET || 'secret_key', {
+  const token = jwt.sign({ data: { email, role } }, senha, {
     expiresIn: '30d',
       algorithm: 'HS256',
   });
@@ -13,7 +15,7 @@ const createToken = ({ email, role }) => {
 
 const checkToken = (token) => {
   try {
-    const { data } = jwt.verify(token, process.env.JWT_SECRE || 'secret_key');
+    const { data } = jwt.verify(token, senha);
     return data;
   } catch (_err) {
     throwMyError(StatusCodes.UNAUTHORIZED, 'Token expirado ou inválido');
