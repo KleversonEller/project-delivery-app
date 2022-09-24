@@ -18,7 +18,7 @@ function ProductCheckoutTableRow(props) {
   };
 
   return (
-    <tr>
+    <tr key={ i }>
       <td
         data-testid={ `customer_checkout__element-order-table-item-number-${i}` }
       >
@@ -37,7 +37,7 @@ function ProductCheckoutTableRow(props) {
       <td
         data-testid={ `customer_checkout__element-order-table-unit-price-${i}` }
       >
-        {price}
+        {price.replace('.', ',')}
       </td>
       <td
         data-testid={ `customer_checkout__element-order-table-sub-total-${i}` }
