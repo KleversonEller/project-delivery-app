@@ -35,7 +35,7 @@ const getAll = async (role) => {
     where: { role },
   });
   return result;
-}
+};
 
 module.exports = { 
   createUser,
