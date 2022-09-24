@@ -1,20 +1,29 @@
-const { StatusCodes } = require('http-status-codes');
-const { sales: salesProductsModel } = require('../database/models');
+const { sales: salesModel, salesProducts: salesProductsModel  } = require('../database/models');
 const throwMyError = require('../utils/throwMyError');
 
 class SalesProductsService {
   constructor() {
-    this.model = salesProductsModel;
+    this.model = salesModel;
   }
+async createSalesProducts(products, saleId) {
+  const newSalesProducts = Promise.all(products.map((ele) => salesProductsModel.create({
+    quantity: ele.quantity,
+    saleId: saleId,
+    productId: ele.productId,
+  })));
+}
   
   async createSales(sales) {
-    const { sallerId } = sales;
-
-  if (await this.model.findOne({ where: { sallerId } })) {
-    throwMyError(StatusCodes.CONFLICT, 'Venda cadastrada');
-  }
-  const newSales = await this.model.create({ ...sales });
-  return newSales;
+    const { userId,
+      sallerId,
+      totalPrice,
+      deliveryAddress,
+      deliveryNumber,
+      products,
+     } = sales;
+    const newSales = await this.model.create({ userId, sallerId, totalPrice, deliveryAddress, deliveryNumber, status: 'pendente'});
+    await this.createSalesProducts(products, newSales.saleId)
+    return newSales;
   }
 }
 
