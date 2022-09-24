@@ -30,6 +30,14 @@ const createUser = async (user) => {
   };
 };
 
+const getAll = async (role) => {
+  const result = await users.findAll({
+    where: { role },
+  });
+  return result;
+}
+
 module.exports = { 
   createUser,
+  getAll,
 };
