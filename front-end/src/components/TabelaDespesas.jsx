@@ -40,7 +40,7 @@ export default function TabelaDespesas() {
       <p
         data-testid="customer_checkout__element-order-total-price"
       >
-        {Number(calculatesTotalPrice(shoppingCart).toFixed(2))}
+        {(calculatesTotalPrice(shoppingCart).toFixed(2)).replace('.', ',')}
 
       </p>
     </div>
