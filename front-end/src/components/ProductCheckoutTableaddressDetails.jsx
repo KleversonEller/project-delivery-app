@@ -49,7 +49,7 @@ function ProductCheckoutTableaddressDetails(props) {
       />
       <input
         type="number"
-        data-testid="customer_checkout__input-addressNumber"
+        data-testid="customer_checkout__input-address-number"
         onChange={ (e) => setAdressNumber(e.target.name) }
       />
       <button
