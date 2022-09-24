@@ -1,3 +1,18 @@
+const newProductList = (
+  localStorageProducts,
+  findProductIndex,
+  product,
+  quantity,
+) => {
+  const productList = localStorageProducts;
+  if (Number(quantity) > 0) {
+    productList[findProductIndex].quantity = quantity;
+  } else {
+    productList.splice(findProductIndex, 1);
+  }
+  return productList;
+};
+
 const saveProductAtShoppingCart = (product, quantity) => {
   const carrinho = 'carrinho';
   const newQuantity = Number(quantity);
@@ -10,7 +25,12 @@ const saveProductAtShoppingCart = (product, quantity) => {
     .findIndex((prod) => prod.id === product.id);
 
   if (findProductIndex >= 0) {
-    localStorageProducts[findProductIndex].quantity = newQuantity;
+    localStorageProducts = newProductList(
+      localStorageProducts,
+      findProductIndex,
+      product,
+      quantity,
+    );
   } else {
     localStorageProducts.push({ ...product, quantity: newQuantity });
   }
