@@ -30,7 +30,6 @@ function Checkout() {
       <h1>Detalhes e Endereço para Entrega</h1>
       <ProductCheckoutTableaddressDetails
         sellers={ sellers }
-        user={ user }
       />
     </div>
   );
