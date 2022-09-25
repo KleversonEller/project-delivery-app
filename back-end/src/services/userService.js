@@ -26,7 +26,7 @@ const createUser = async (user) => {
   const token = createToken({ email: user.email, role: 'customer' });
   return {
     token,
-    role: newUser.role,
+    ...newUser.dataValues,
   };
 };
 
