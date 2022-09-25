@@ -1,4 +1,6 @@
+const { StatusCodes } = require('http-status-codes');
 const { sales: salesModel, salesProducts: salesProductsModel } = require('../database/models');
+const throwMyError = require('../utils/throwMyError');
 // const throwMyError = require('../utils/throwMyError');
 
 class SalesProductsService {
@@ -17,17 +19,18 @@ class SalesProductsService {
 }
   
   async createSales(sales) {
-    const { userId,
-      sallerId,
+    const {
+      userId,
+      sellerId,
       totalPrice,
       deliveryAddress,
       deliveryNumber,
       products,
      } = sales;
-    const newSales = await this.model.create({ 
-      userId, sallerId, totalPrice, deliveryAddress, deliveryNumber, status: 'pendente',
-    });
-    await this.createSalesProducts(products, newSales.saleId);
+     const newSales = await this.model.create({ 
+       userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, status: 'Pendente',
+      });
+    await this.createSalesProducts(products, newSales.dataValues.id);
     return newSales;
   }
 }
