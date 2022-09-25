@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import calculatesTotalPrice from '../helpers/calculatesTotalPrice';
 import requestCreateSales from '../services/requestCreateSales';
 
 function ProductCheckoutTableaddressDetails(props) {
   const { sellers } = props;
-  const [address, setAdress] = useState('');
-  const [addressNumber, setAdressNumber] = useState('');
-  const [sallerId, setSellerId] = useState(0);
+  const [address, setAddress] = useState('');
+  const [addressNumber, setAddressNumber] = useState('');
+  const [sellerId, setSellerId] = useState(0);
+  const history = useHistory();
 
-  console.log(sallerId);
+  console.log(sellerId);
 
   useEffect(() => {
     if (sellers.length > 0) setSellerId(sellers[0].id);
@@ -20,7 +22,7 @@ function ProductCheckoutTableaddressDetails(props) {
     const products = JSON.parse(localStorage.getItem('carrinho'));
     const sale = {
       userId: user.id,
-      sallerId,
+      sellerId,
       totalPrice: calculatesTotalPrice(products),
       deliveryAddress: address,
       deliveryNumber: addressNumber,
@@ -28,8 +30,11 @@ function ProductCheckoutTableaddressDetails(props) {
         { productId: product.id, quantity: product.quantity }
       )),
     };
-    const req = await requestCreateSales(sale);
-    console.log(req);
+    const request = await requestCreateSales(sale, user.token);
+    console.log(request);
+    if (!request.message) {
+      return history.push(`/customer/orders/${request.id}`);
+    }
   };
 
   return (
@@ -45,12 +50,14 @@ function ProductCheckoutTableaddressDetails(props) {
       <input
         type="text"
         data-testid="customer_checkout__input-address"
-        onChange={ (e) => setAdress(e.target.name) }
+        value={ address }
+        onChange={ (e) => setAddress(e.target.value) }
       />
       <input
         type="number"
         data-testid="customer_checkout__input-address-number"
-        onChange={ (e) => setAdressNumber(e.target.name) }
+        value={ addressNumber }
+        onChange={ (e) => setAddressNumber(e.target.value) }
       />
       <button
         type="button"
