@@ -31,7 +31,7 @@ const saveProductAtShoppingCart = (product, quantity) => {
       product,
       quantity,
     );
-  } else {
+  } else if (quantity > 0) {
     localStorageProducts.push({ ...product, quantity: newQuantity });
   }
 
