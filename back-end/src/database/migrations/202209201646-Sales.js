@@ -22,10 +22,10 @@ module.exports = {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       },
-      sallerId: {
+      sellerId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        field: 'saller_id',
+        field: 'seller_id',
         references: {
           model: 'users',
           key: 'id',
