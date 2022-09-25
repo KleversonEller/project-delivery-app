@@ -1,4 +1,4 @@
-const { checkToken } = require("../utils/jwt");
+const { checkToken } = require('../utils/jwt');
 
 const authenticationMiddleware = (req, _res, next) => {
   const { authorization: token } = req.headers;
@@ -8,6 +8,6 @@ const authenticationMiddleware = (req, _res, next) => {
   req.user = decode.data;
 
   next();
-}
+};
 
 module.exports = authenticationMiddleware;

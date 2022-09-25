@@ -1,7 +1,4 @@
-const { StatusCodes } = require('http-status-codes');
 const { sales: salesModel, salesProducts: salesProductsModel } = require('../database/models');
-const throwMyError = require('../utils/throwMyError');
-// const throwMyError = require('../utils/throwMyError');
 
 class SalesProductsService {
   constructor() {
