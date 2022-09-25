@@ -1,11 +1,12 @@
 const URL = 'http://localhost:3001/sales';
 
-const requestCreateSales = async (sales) => {
+const requestCreateSales = async (sales, token) => {
   try {
     const response = await fetch(URL, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
+        Authorization: token,
       },
       body: JSON.stringify(sales),
     });
