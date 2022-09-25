@@ -73,10 +73,10 @@ export default function CardFood(props) {
       </button>
 
       <input
+        type="text"
         data-testid={ `customer_products__input-card-quantity-${id}` }
         value={ quantity }
         onChange={ handleChange }
-        readOnly
       />
 
       <button
