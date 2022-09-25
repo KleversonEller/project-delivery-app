@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       foreignKey: true,
     },
-    sallerId: {
+    sellerId: {
       type: DataTypes.INTEGER,
       foreignKey: true,
     },
