@@ -30,6 +30,11 @@ class SalesProductsService {
     await this.createSalesProducts(products, newSales.dataValues.id);
     return newSales;
   }
+
+  async getAllSales() {
+    const result = await this.model.findAll({});
+    return result;
+  }
 }
 
 module.exports = new SalesProductsService();
