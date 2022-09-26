@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import calculatesTotalPrice from '../helpers/calculatesTotalPrice';
+import MyContext from '../contexts/MyContext';
 import requestCreateSales from '../services/requestCreateSales';
 
-function ProductCheckoutTableaddressDetails(props) {
-  const { sellers } = props;
+function ProductCheckoutTableaddressDetails() {
+  const { sellers } = useContext(MyContext);
   const [address, setAddress] = useState('');
   const [addressNumber, setAddressNumber] = useState('');
   const [sellerId, setSellerId] = useState(0);
@@ -72,8 +72,8 @@ function ProductCheckoutTableaddressDetails(props) {
   );
 }
 
-ProductCheckoutTableaddressDetails.propTypes = {
-  sellers: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-};
+// ProductCheckoutTableaddressDetails.propTypes = {
+//   sellers: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+// };
 
 export default ProductCheckoutTableaddressDetails;
