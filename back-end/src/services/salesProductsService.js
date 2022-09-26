@@ -1,34 +1,27 @@
-const { sales: salesModel, salesProducts: salesProductsModel } = require('../database/models');
+const { salesProducts: salesProductsModel } = require('../database/models');
 
 class SalesProductsService {
   constructor() {
-    this.model = salesModel;
-    this.modelSalesProducts = salesProductsModel;
+    this.model = salesProductsModel;
+  }
+  
+  async create(product, saleId, transaction) {
+    const salesProducts = this.model.create(
+      {
+        quantity: product.quantity,
+        saleId,
+        productId: product.productId,
+      },
+      { transaction },
+    );
+    return salesProducts;
   }
 
-  async createSalesProducts(products, saleId) {
-  const newSalesProducts = Promise.all(products.map((ele) => this.modelSalesProducts.create({
-    quantity: ele.quantity,
-    saleId,
-    productId: ele.productId,
-  })));
-  return newSalesProducts;
-}
-  
-  async createSales(sales) {
-    const {
-      userId,
-      sellerId,
-      totalPrice,
-      deliveryAddress,
-      deliveryNumber,
-      products,
-     } = sales;
-     const newSales = await this.model.create({ 
-       userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, status: 'Pendente',
-      });
-    await this.createSalesProducts(products, newSales.dataValues.id);
-    return newSales;
+  async getBySaleId(saleId) {
+    return this.model.findAll({ 
+      where: { saleId },
+      attributes: { exclude: ['saleId'] },
+    });
   }
 
   async getAllSales() {

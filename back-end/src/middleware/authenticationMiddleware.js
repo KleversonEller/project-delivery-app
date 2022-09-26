@@ -5,7 +5,7 @@ const authenticationMiddleware = (req, _res, next) => {
 
   const decode = checkToken(token);
 
-  req.user = decode.data;
+  req.user = decode;
 
   next();
 };

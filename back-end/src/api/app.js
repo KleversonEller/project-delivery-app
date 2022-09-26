@@ -18,8 +18,8 @@ app.use(cors());
 
 app.use(router.loginRouter);
 app.use(router.productsRouter);
-app.use(router.userRoutes);
-app.use(router.salesProductRoutes);
+app.use(router.userRouter);
+app.use(router.salesRouter);
 app.use(express.static('public'));
 
 app.use(errorHandler);
