@@ -38,7 +38,10 @@ class SalesService {
 
     if (!sale) throwMyError(StatusCodes.NOT_FOUND, 'Venda não encontrada');
 
-    return sale;
+    const salesProducts = await this.salesProductsService
+      .getBySaleId(sale.dataValues.id);
+
+    return { ...sale.dataValues, salesProducts };
   }
 }
 
