@@ -30,7 +30,10 @@ function Register() {
     e.preventDefault();
     if (name && email && password) {
       const user = await requestCreateUser(name, email, password);
-      if (!user.message) history.push(userRoutes[user.role]);
+      if (!user.message) {
+        localStorage.setItem('user', JSON.stringify(user));
+        history.push(userRoutes[user.role]);
+      }
       setErrorMessage(user.message);
     }
   };

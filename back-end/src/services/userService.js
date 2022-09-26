@@ -26,10 +26,18 @@ const createUser = async (user) => {
   const token = createToken({ email: user.email, role: 'customer' });
   return {
     token,
-    role: newUser.role,
+    ...newUser.dataValues,
   };
+};
+
+const getAll = async (role) => {
+  const result = await users.findAll({
+    where: { role },
+  });
+  return result;
 };
 
 module.exports = { 
   createUser,
+  getAll,
 };

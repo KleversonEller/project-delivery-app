@@ -1,5 +1,7 @@
 'use strict';
 
+const { DATE } = require("sequelize");
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('sales', {
@@ -20,10 +22,10 @@ module.exports = {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       },
-      sallerId: {
+      sellerId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        field: 'saller_id',
+        field: 'seller_id',
         references: {
           model: 'users',
           key: 'id',
@@ -47,7 +49,7 @@ module.exports = {
         field: 'delivery_number'
       },
       saleDate: {
-        type: Sequelize.STRING,
+        type: Sequelize.DATE,
         allowNull: false,
         field: 'sale_date'
       },
