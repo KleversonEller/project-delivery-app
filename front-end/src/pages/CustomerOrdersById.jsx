@@ -20,7 +20,9 @@ function CustomerOrders() {
   useEffect(() => {
     handle();
   }, []);
-
+  const dataIdName = 'customer_order_details__element-order-details-label-seller-name';
+  const dataIdDate = 'customer_order_details__element-order-details-label-order-date';
+  const idStatus = 'customer_order_details__element-order-details-label-delivery-status';
   return (
     <div>
       <Header />
@@ -28,14 +30,23 @@ function CustomerOrders() {
       <div>
         {sellers?.map((ele, i) => (
           <div key={ i }>
-            <h2>{ele.id}</h2>
-            <h2>{ele.name}</h2>
+            <h2
+              data-testid={ `customer_products__element-order-date-${id}` }
+            >
+              {ele.id}
+            </h2>
+            <h2
+              data-testid={ dataIdName }
+            >
+              {ele.name}
+            </h2>
           </div>
         ))}
-        <h2>{salesById?.saleDate}</h2>
-        <h2>{salesById?.status}</h2>
+        <h2 data-testid={ dataIdDate }>{salesById?.saleDate}</h2>
+        <h2 data-testid={ `${idStatus}${i}}` }>{salesById?.status}</h2>
         <button
           type="button"
+          data-testid="customer_order_details__button-delivery-check"
         >
           MARCAR COMO ENTREGUE
 
