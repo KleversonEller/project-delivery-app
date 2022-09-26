@@ -21,6 +21,14 @@ class SalesController {
 
     res.status(StatusCodes.CREATED).json(result);
   }
+
+  async getById(req, res) {
+    const { id } = req.params;
+
+    const sale = this.service.getById(Number(id));
+
+    res.status(StatusCodes.OK).json(sale);
+  }
 }
 
 module.exports = new SalesController();
