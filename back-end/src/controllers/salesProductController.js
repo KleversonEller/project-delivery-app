@@ -8,7 +8,7 @@ class SalesProductController {
 
   async createSales(req, res) {
     const sales = req.body;
-    const result = await this.service.createSales([sales]);
+    const result = await this.service.createSales(sales);
     res.status(StatusCodes.CREATED).json(result);
   }
 
