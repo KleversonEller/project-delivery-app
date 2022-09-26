@@ -25,7 +25,7 @@ class SalesController {
   async getById(req, res) {
     const { id } = req.params;
 
-    const sale = this.service.getById(Number(id));
+    const sale = await this.service.getById(Number(id));
 
     res.status(StatusCodes.OK).json(sale);
   }
