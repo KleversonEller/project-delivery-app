@@ -11,4 +11,10 @@ router.post(
   (req, res) => salesController.create(req, res),
 );
 
+router.get(
+  '/sales/:id',
+  authenticationMiddleware,
+  (req, res) => salesController.getById(req, res),
+);
+
 module.exports = router;
