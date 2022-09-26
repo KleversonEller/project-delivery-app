@@ -1,22 +1,26 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import ProductCheckoutTableRow from '../components/ProductCheckoutTableRow';
-import Header from '../components/Header';
+import { useParams } from 'react-router-dom';
 import MyContext from '../contexts/MyContext';
+import ProductCheckoutTableRow from '../components/ProductCheckoutTableRow';
+import calculatesTotalPrice from '../helpers/calculatesTotalPrice';
+import Header from '../components/Header';
 
 function CustomerOrders() {
   const { sellers } = useContext(MyContext);
+  const [shoppingCart, setShoppingCart] = useState([]);
   const [salesById, setSalesById] = useState({});
+  const id = useParams();
 
   const handle = async () => {
     const { token } = JSON.parse(localStorage.getItem('user'));
-    const saleById = await requestGetByIdSales(token);
+    setShoppingCart(JSON.parse(localStorage.getItem('carrinho')) || []);
+    const saleById = await requestGetByIdSales(token, id);
     setSalesById(saleById);
-    console.log(() => useHistory);
   };
   useEffect(() => {
     handle();
   }, []);
+
   return (
     <div>
       <Header />
@@ -36,8 +40,25 @@ function CustomerOrders() {
           MARCAR COMO ENTREGUE
 
         </button>
-        <ProductCheckoutTableRow />
+        <tbody>
+          {shoppingCart?.map((element, i) => (
+            <ProductCheckoutTableRow
+              key={ i }
+              element={ element }
+              shoppingCart={ shoppingCart }
+              setShoppingCart={ setShoppingCart }
+              calculatesTotalPrice={ calculatesTotalPrice }
+              i={ i }
+            />
+          ))}
+        </tbody>
       </div>
+      <p
+        data-testid="customer_checkout__element-order-total-price"
+      >
+        {(calculatesTotalPrice(shoppingCart).toFixed(2)).replace('.', ',')}
+
+      </p>
     </div>
   );
 }
