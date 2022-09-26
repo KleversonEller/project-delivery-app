@@ -16,6 +16,13 @@ class SalesProductsService {
     );
     return salesProducts;
   }
+
+  async getBySaleId(saleId) {
+    return this.model.findAll({ 
+      where: { saleId },
+      attributes: { exclude: ['saleId'] },
+    });
+  }
 }
 
 module.exports = new SalesProductsService();
