@@ -6,11 +6,15 @@ const throwMyError = require('./throwMyError');
 
 const senha = fs.readFileSync('jwt.evaluation.key');
 
-const createToken = ({ email, role }) => {
-  const token = jwt.sign({ data: { email, role } }, senha, {
+const createToken = ({ id, name, email, role }) => {
+  const data = { id, name, email, role };
+
+  const jwtOptions = {
     expiresIn: '30d',
       algorithm: 'HS256',
-  });
+  };
+
+  const token = jwt.sign({ data }, senha, jwtOptions);
   return token;
 };
 
