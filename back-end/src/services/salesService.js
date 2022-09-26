@@ -1,7 +1,9 @@
 const Sequelize = require('sequelize');
+const { StatusCodes } = require('http-status-codes');
 const { sales: salesModel } = require('../database/models');
 const SalesProductsService = require('./salesProductsService');
 const config = require('../database/config/config');
+const throwMyError = require('../utils/throwMyError');
 require('dotenv').config();
 
 const environment = process.env.NODE_ENV || 'development';
@@ -29,6 +31,14 @@ class SalesService {
       await t.rollback();
       throw new Error(err.message);
     }
+  }
+
+  async getById(id) {
+    const sale = await this.model.findByPk(id);
+
+    if (!sale) throwMyError(StatusCodes.NOT_FOUND, 'Venda não encontrada');
+
+    return sale;
   }
 }
 
