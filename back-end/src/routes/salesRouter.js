@@ -1,6 +1,6 @@
 const express = require('express');
 
-const salesProductController = require('../controllers/salesProductController');
+const salesController = require('../controllers/salesController');
 const authenticationMiddleware = require('../middleware/authenticationMiddleware');
 
 const router = express.Router();
@@ -8,7 +8,7 @@ const router = express.Router();
 router.post(
   '/sales',
   authenticationMiddleware,
-  (req, res) => salesProductController.createSales(req, res),
+  (req, res) => salesController.create(req, res),
 );
 
 module.exports = router;
