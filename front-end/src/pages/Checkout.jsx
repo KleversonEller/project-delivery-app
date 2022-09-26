@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import TabelaDespesas from '../components/TabelaDespesas';
 import Header from '../components/Header';
+import MyContext from '../contexts/MyContext';
 import ProductCheckoutTableaddressDetails
   from '../components/ProductCheckoutTableaddressDetails';
 import requestGetAllSellers from '../services/requestGetAllSellers';
 
 function Checkout() {
-  const [sellers, setSellers] = useState([]);
+  const { sellers, setSellers } = useContext(MyContext);
   const [requestError, setRequestError] = useState('');
 
   console.log(requestError);
@@ -28,9 +29,7 @@ function Checkout() {
       <h1>Finalizar Pedido</h1>
       <TabelaDespesas />
       <h1>Detalhes e Endereço para Entrega</h1>
-      <ProductCheckoutTableaddressDetails
-        sellers={ sellers }
-      />
+      <ProductCheckoutTableaddressDetails />
     </div>
   );
 }
