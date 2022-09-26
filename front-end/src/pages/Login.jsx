@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import requestLogin from '../services/requestLogin';
 import Notification from '../components/Notification';
 import userRoutes from '../helpers/userRoutes';
+import logo from '../images/images.jpeg';
 
 export default function Login() {
   const history = useHistory();
@@ -37,17 +38,20 @@ export default function Login() {
   };
 
   return (
-    <>
+    <div className="flex justify-center mt-16">
       <form
+        className="flex flex-col items-center p-6 bg-zinc-300 rounded gap-2"
         onSubmit={ handleSubmit }
       >
         <section>
-          <h1>Delivery App</h1>
-          <h3>Login</h3>
+          <img src={ logo } alt="" className="rounded" />
+          <h1 className="text-center text-4xl mt-2 font-extrabold">Delivery App</h1>
         </section>
-        <section>
-          <label htmlFor="userEmail">
+        <section className="flex flex-col gap-6">
+          <label htmlFor="userEmail" className="flex flex-col gap-1">
+            Login
             <input
+              className="bg-zinc-400 rounded h-8 placeholder:text-zinc-600 p-3"
               data-testid="common_login__input-email"
               placeholder="Type your email"
               type="email"
@@ -56,8 +60,10 @@ export default function Login() {
               onChange={ ({ target: { value } }) => setUserEmail(value) }
             />
           </label>
-          <label htmlFor="pass">
+          <label htmlFor="pass" className="flex flex-col gap-1">
+            Password
             <input
+              className="bg-zinc-400 rounded h-8 placeholder:text-zinc-600 p-3"
               data-testid="common_login__input-password"
               placeholder="Type your password"
               type="password"
@@ -67,22 +73,25 @@ export default function Login() {
             />
           </label>
         </section>
-        <Button
-          data-testid="common_login__button-login"
-          className="login_btn"
-          type="submit"
-          disabled={ cantSubmit }
-        >
-          LOGIN
-        </Button>
-        <Button
-          data-testid="common_login__button-register"
-          className="login_btn"
-          type="button"
-          onClick={ () => { history.push('/register'); } }
-        >
-          Ainda não tenho conta
-        </Button>
+        <div className="flex flex-col gap-1 mt-4">
+          <Button
+            data-testid="common_login__button-login"
+            className={ `login_btn bg-green-500 rounded h-8
+             hover:bg-green-400 disabled:bg-zinc-600` }
+            type="submit"
+            disabled={ cantSubmit }
+          >
+            LOGIN
+          </Button>
+          <Button
+            data-testid="common_login__button-register"
+            className="login_btn"
+            type="button"
+            onClick={ () => { history.push('/register'); } }
+          >
+            Ainda não tenho conta
+          </Button>
+        </div>
       </form>
       {(errorMessage) && (
         <Notification
@@ -90,6 +99,6 @@ export default function Login() {
           dataTestId="common_login__element-invalid-email"
         />
       )}
-    </>
+    </div>
   );
 }
