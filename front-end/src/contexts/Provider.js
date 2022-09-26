@@ -5,13 +5,16 @@ import MyContext from './MyContext';
 export default function Provider({ children }) {
   const [user, setUser] = useState({});
   const [isFetching, setIsFetching] = useState(false);
+  const [sellers, setSellers] = useState([]);
 
   const value = useMemo(() => ({
     user,
     setUser,
     isFetching,
     setIsFetching,
-  }), [user, isFetching]);
+    sellers,
+    setSellers,
+  }), [user, isFetching, sellers]);
 
   return (
     <MyContext.Provider value={ value }>
