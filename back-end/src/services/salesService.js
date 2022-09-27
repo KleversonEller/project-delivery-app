@@ -33,6 +33,12 @@ class SalesService {
     }
   }
 
+  async getAllByUserId(userId) {
+    const sales = await this.model.findAll({ where: { userId } });
+
+    return sales;
+  }
+
   async getById(id) {
     const sale = await this.model.findByPk(id);
 
