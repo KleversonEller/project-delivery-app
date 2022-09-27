@@ -18,9 +18,21 @@ router.get(
 );
 
 router.get(
+  '/sales/seller',
+  authenticationMiddleware,
+  (req, res) => salesController.getAllBySellerId(req, res),
+);
+
+router.get(
   '/sales/:id',
   authenticationMiddleware,
   (req, res) => salesController.getById(req, res),
+);
+
+router.patch(
+  '/sales/:id',
+  authenticationMiddleware,
+  (req, res) => salesController.updateStatus(req, res),
 );
 
 module.exports = router;

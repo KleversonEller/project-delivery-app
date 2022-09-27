@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const { StatusCodes } = require('http-status-codes');
-const { sales: salesModel } = require('../database/models');
+const { sales: salesModel, products: productsModel } = require('../database/models');
 const SalesProductsService = require('./salesProductsService');
 const config = require('../database/config/config');
 const throwMyError = require('../utils/throwMyError');
@@ -39,15 +39,41 @@ class SalesService {
     return sales;
   }
 
+  async getAllBySellerId(sellerId) {
+    const sales = await this.model.findAll({ where: { sellerId } });
+
+    return sales;
+  }
+
   async getById(id) {
-    const sale = await this.model.findByPk(id);
+    const sale = await this.model.findOne({
+      where: { id },
+      include: [{
+        model: productsModel, as: 'products', through: { attributes: [] },
+      }],
+    });
 
     if (!sale) throwMyError(StatusCodes.NOT_FOUND, 'Venda não encontrada');
 
     const salesProducts = await this.salesProductsService
       .getBySaleId(sale.dataValues.id);
 
-    return { ...sale.dataValues, salesProducts };
+    const { products } = sale.dataValues;
+
+    const newProducts = products.map((product, index) => (
+      { ...product.dataValues, quantity: salesProducts[index].quantity }));
+
+    return { ...sale.dataValues, products: newProducts };
+  }
+
+  async updateStatus(id, status) {
+    const updatedSale = await this.model.update({ status }, { where: { id } });
+    
+    if (!updatedSale[0]) throwMyError(StatusCodes.NOT_FOUND, 'Venda não encontrada');
+
+    const sale = await this.getById(id);
+
+    return sale;
   }
 }
 

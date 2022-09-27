@@ -30,12 +30,29 @@ class SalesController {
     res.status(StatusCodes.OK).json(sales);
   }
 
+  async getAllBySellerId(req, res) {
+    const { id: sellerId } = req.user;
+
+    const sales = await this.service.getAllBySellerId(sellerId);
+
+    res.status(StatusCodes.OK).json(sales);
+  }
+
   async getById(req, res) {
     const { id } = req.params;
 
     const sale = await this.service.getById(Number(id));
 
     res.status(StatusCodes.OK).json(sale);
+  }
+
+  async updateStatus(req, res) {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    const updatedSale = await this.service.updateStatus(id, status);
+    
+    res.status(StatusCodes.OK).json(updatedSale);
   }
 }
 
