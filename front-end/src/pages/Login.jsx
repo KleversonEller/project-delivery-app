@@ -14,7 +14,6 @@ export default function Login() {
 
   useEffect(() => {
     if (history.location.pathname === '/') history.push('/login');
-
     setErrorMessage('');
     const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
     const testuserEmail = regex.test(userEmail);
@@ -22,6 +21,14 @@ export default function Login() {
     if (testuserEmail && password.length > min) setCantSubmit(false);
     else setCantSubmit(true);
   }, [userEmail, password, history]);
+
+  useEffect(() => {
+    if (history.location.pathname === '/login'
+    && JSON.parse(localStorage.getItem('user'))) {
+      history.push('/login');
+      history.push('/customer/products');
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -7,9 +7,11 @@ function CustomerOrders() {
   const [sales, setSales] = useState([]);
 
   const handle = async () => {
-    const { token } = JSON.parse(localStorage.getItem('user'));
-    const arraySales = await requestGetAllSales(token);
-    setSales(arraySales);
+    if (JSON.parse(localStorage.getItem('user'))) {
+      const { token } = JSON.parse(localStorage.getItem('user'));
+      const arraySales = await requestGetAllSales(token);
+      setSales(arraySales);
+    }
   };
 
   useEffect(() => {

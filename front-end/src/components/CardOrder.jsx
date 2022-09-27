@@ -5,6 +5,15 @@ export default function CardOrder(props) {
   const { sales } = props;
   console.log(sales);
 
+  const formatDate = (date) => {
+    const newDate = new Date(date);
+    const format = `
+    ${newDate.getDate()}/${(newDate.getMonth() + 1)
+  .toString().padStart(2, '0')}/${newDate.getFullYear()}`;
+    console.log(format);
+    return format;
+  };
+
   return (
     <div>
       {sales?.map((element, i) => (
@@ -16,10 +25,10 @@ export default function CardOrder(props) {
             {element.status}
           </p>
           <p data-testid={ `customer_orders__element-order-date-${element.id}` }>
-            {element.saleDate}
+            {formatDate(element.saleDate)}
           </p>
           <p data-testid={ `customer_orders__element-card-price-${element.id}` }>
-            {element.totalPrice}
+            {element.totalPrice.toString().replace('.', ',')}
           </p>
         </div>
       ))}
