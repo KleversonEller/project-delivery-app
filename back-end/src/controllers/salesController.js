@@ -22,6 +22,14 @@ class SalesController {
     res.status(StatusCodes.CREATED).json(result);
   }
 
+  async getAllByUserId(req, res) {
+    const { id: userId } = req.user;
+
+    const sales = await this.service.getAllByUserId(userId);
+
+    res.status(StatusCodes.OK).json(sales);
+  }
+
   async getById(req, res) {
     const { id } = req.params;
 
