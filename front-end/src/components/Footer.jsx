@@ -19,8 +19,9 @@ export default function Footer(props) {
           data-testid="footer"
         >
           <button
+            className={ `footer_btn bg-green-400 rounded h-14 w-60
+            hover:bg-green-500 disabled:bg-zinc-600 mb-12` }
             data-testid="customer_products__button-cart"
-            className="footer_btn"
             type="button"
             onClick={ () => history.push('/customer/checkout') }
             disabled={ totalPrice <= 0 }
