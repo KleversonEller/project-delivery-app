@@ -1,43 +1,39 @@
-const Joi = require('joi');
 const { StatusCodes } = require('http-status-codes');
-const { users } = require('../database/models/index');
+const { users: usersModel } = require('../database/models/index');
 const { encryptPassword } = require('../utils/md5');
 const { createToken } = require('../utils/jwt');
 const throwMyError = require('../utils/throwMyError');
+const LoginValidate = require('../validations/loginValidate');
 
-const userSchema = Joi.object({
-  name: Joi.string().required(),
-  email: Joi.string().email().required(),
-  password: Joi.string().required(),
-});
-
-const createUser = async (user) => {
-  const { error } = userSchema.validate(user);
-
-  if (error) throwMyError(StatusCodes.BAD_REQUEST, 'Dados inválidos');
-
-  const { password } = user;
-  const passwordHash = encryptPassword(password);
-
-  if (await users.findOne({ where: { email: user.email } })) {
-    throwMyError(StatusCodes.CONFLICT, 'O usuário já possui cadastro');
+class UserService {
+  constructor(model = usersModel) {
+    this.model = model;
   }
-  const newUser = await users.create({ ...user, password: passwordHash, role: 'customer' });
-  const token = createToken({ email: user.email, role: 'customer' });
-  return {
-    token,
-    ...newUser.dataValues,
-  };
-};
 
-const getAll = async (role) => {
-  const result = await users.findAll({
-    where: { role },
-  });
-  return result;
-};
+  async create(user) {
+    LoginValidate.validateCredentials(user);
+  
+    const { password } = user;
+    const passwordHash = encryptPassword(password);
+  
+    if (await this.model.findOne({ where: { email: user.email } })) {
+      throwMyError(StatusCodes.CONFLICT, 'O usuário já possui cadastro');
+    }
 
-module.exports = { 
-  createUser,
-  getAll,
-};
+    const newUser = await this.model.create({ ...user, password: passwordHash, role: 'customer' });
+    
+    const token = createToken(newUser.dataValues);
+
+    return { token, ...newUser.dataValues };
+  }
+  
+  async getAll(role) {
+    const result = await this.model.findAll({
+      where: { role },
+    });
+
+    return result;
+  }
+}
+
+module.exports = new UserService();

@@ -1,6 +1,6 @@
 const express = require('express');
 
-const salesProductController = require('../controllers/salesProductController');
+const salesController = require('../controllers/salesController');
 const authenticationMiddleware = require('../middleware/authenticationMiddleware');
 
 const router = express.Router();
@@ -8,13 +8,19 @@ const router = express.Router();
 router.post(
   '/sales',
   authenticationMiddleware,
-  (req, res) => salesProductController.createSales(req, res),
+  (req, res) => salesController.create(req, res),
 );
 
 router.get(
   '/sales',
   authenticationMiddleware,
-  (req, res) => salesProductController.getAllSales(req, res),
+  (req, res) => salesController.getAllByUserId(req, res),
+);
+
+router.get(
+  '/sales/:id',
+  authenticationMiddleware,
+  (req, res) => salesController.getById(req, res),
 );
 
 module.exports = router;

@@ -11,6 +11,11 @@ class SalesProductController {
     const result = await this.service.createSales(sales);
     res.status(StatusCodes.CREATED).json(result);
   }
+
+  async getAllSales(req, res) {
+    const result = await this.service.getAllSales();
+    res.status(StatusCodes.OK).json(result);
+  }
 }
 
 module.exports = new SalesProductController();

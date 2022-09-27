@@ -29,11 +29,13 @@ const validateCredentials = async ({ email, password }) => {
   const valide = passwordService.checkPassword(password, user.password);
 
   if (!valide) throwMyError(StatusCodes.NOT_FOUND, 'Usuário não encontrado');
-  const token = createToken({ user });
-    return { ...user.dataValues, token };
+
+  const token = createToken(user);
+
+  return { ...user.dataValues, token };
 };
 
-  module.exports = {
-    validateCredentials,
-    validateBody,
-  };
+module.exports = {
+  validateCredentials,
+  validateBody,
+};

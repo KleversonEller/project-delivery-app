@@ -5,8 +5,10 @@ import { Link } from 'react-router-dom';
 export default function Header() {
   const [header, setHeader] = useState({});
   useEffect(() => {
-    const value = JSON.parse(localStorage.getItem('user'));
-    setHeader(value);
+    if (JSON.parse(localStorage.getItem('user'))) {
+      const value = JSON.parse(localStorage.getItem('user'));
+      setHeader(value);
+    }
   }, []);
 
   return (
