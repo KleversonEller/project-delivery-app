@@ -4,7 +4,9 @@ import MyContext from '../contexts/MyContext';
 import ProductCheckoutTableRow from '../components/ProductCheckoutTableRow';
 import calculatesTotalPrice from '../helpers/calculatesTotalPrice';
 import Header from '../components/Header';
-import requestGetByIdSales from '../services/requestGetByIdSale';
+import requestGetByIdSale from '../services/requestGetByIdSale';
+import getFromLocalStorage from '../helpers/getFromLocalStorage';
+import requestUpdateSaleStatus from '../services/requestUpdateSaleStatus';
 
 function CustomerOrders() {
   const { sellers } = useContext(MyContext);
@@ -12,21 +14,29 @@ function CustomerOrders() {
   const [dates, setDates] = useState('');
   const [salesById, setSalesById] = useState({});
   const { id } = useParams();
+  const { token } = getFromLocalStorage('user');
   const ten = 10;
+
   useEffect(() => {
     const handle = async () => {
-      const { token } = JSON.parse(localStorage.getItem('user'));
       setShoppingCart(JSON.parse(localStorage.getItem('carrinho')) || []);
-      const saleById = await requestGetByIdSales(token, id);
+      const saleById = await requestGetByIdSale(token, id);
       const date = saleById.saleDate.slice(0, ten).split('-').reverse().join('/');
       console.log(date);
       setDates(date);
       setSalesById(saleById);
     };
     handle();
-  }, [id]);
-  // console.log(sellers);
-  // console.log(salesById);
+  }, [token, id]);
+
+  const updateStatus = async (status) => {
+    const request = await requestUpdateSaleStatus(token, id, status);
+    if (request.message) return console.log(request.message);
+
+    const requestNewSale = await requestGetByIdSale(token, id);
+
+    setSalesById(requestNewSale);
+  };
 
   const dataIdName = 'customer_order_details__element-order-details-label-seller-name';
   const dataIdDate = 'customer_order_details__element-order-details-label-order-date';
@@ -57,7 +67,8 @@ function CustomerOrders() {
         <button
           type="button"
           data-testid="customer_order_details__button-delivery-check"
-          disabled
+          onClick={ () => updateStatus('Entregue') }
+          disabled={ salesById.status !== 'Em Trânsito' }
         >
           MARCAR COMO ENTREGUE
 
