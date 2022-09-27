@@ -45,6 +45,15 @@ class SalesController {
 
     res.status(StatusCodes.OK).json(sale);
   }
+
+  async updateStatus(req, res) {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    const updatedSale = await this.service.updateStatus(id, status);
+    
+    res.status(StatusCodes.OK).json(updatedSale);
+  }
 }
 
 module.exports = new SalesController();
