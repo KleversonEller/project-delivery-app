@@ -4,22 +4,28 @@ import MyContext from '../contexts/MyContext';
 import ProductCheckoutTableRow from '../components/ProductCheckoutTableRow';
 import calculatesTotalPrice from '../helpers/calculatesTotalPrice';
 import Header from '../components/Header';
+import requestGetByIdSales from '../services/requestGetByIdSale';
 
 function CustomerOrders() {
   const { sellers } = useContext(MyContext);
   const [shoppingCart, setShoppingCart] = useState([]);
   const [salesById, setSalesById] = useState({});
-  const id = useParams();
+  const { id } = useParams();
 
-  const handle = async () => {
-    const { token } = JSON.parse(localStorage.getItem('user'));
-    setShoppingCart(JSON.parse(localStorage.getItem('carrinho')) || []);
-    const saleById = await requestGetByIdSales(token, id);
-    setSalesById(saleById);
-  };
   useEffect(() => {
+    const handle = async () => {
+      const { token } = JSON.parse(localStorage.getItem('user'));
+      setShoppingCart(JSON.parse(localStorage.getItem('carrinho')) || []);
+      const saleById = await requestGetByIdSales(token, id);
+      console.log(saleById);
+      setSalesById(saleById);
+    };
     handle();
-  }, []);
+  }, [id]);
+
+  // console.log(sellers);
+  // console.log(salesById);
+
   const dataIdName = 'customer_order_details__element-order-details-label-seller-name';
   const dataIdDate = 'customer_order_details__element-order-details-label-order-date';
   const idStatus = 'customer_order_details__element-order-details-label-delivery-status';
@@ -31,7 +37,7 @@ function CustomerOrders() {
         {sellers?.map((ele, i) => (
           <div key={ i }>
             <h2
-              data-testid={ `customer_products__element-order-date-${id}` }
+              data-testid="customer_products__element-order-date-id"
             >
               {ele.id}
             </h2>
@@ -43,7 +49,7 @@ function CustomerOrders() {
           </div>
         ))}
         <h2 data-testid={ dataIdDate }>{salesById?.saleDate}</h2>
-        <h2 data-testid={ `${idStatus}${i}}` }>{salesById?.status}</h2>
+        <h2 data-testid={ idStatus }>{salesById?.status}</h2>
         <button
           type="button"
           data-testid="customer_order_details__button-delivery-check"
