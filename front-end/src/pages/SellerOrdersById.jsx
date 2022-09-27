@@ -9,6 +9,8 @@ import requestGetByIdSale from '../services/requestGetByIdSale';
 function SellerOrdersById() {
   const [sale, setSale] = useState(null);
   const { id: saleId } = useParams();
+  const statusThatDisablesPreparingButton = ['Preparando', 'Trânsito', 'Entregue'];
+  const statusThatDisablesDispatchButton = ['Pendente', 'Trânsito', 'Entregue'];
 
   useEffect(() => {
     const { token } = getFromLocalStorage('user');
@@ -25,10 +27,10 @@ function SellerOrdersById() {
   console.log(sale);
   const dataTestSaleId = 'seller_order_details__element-order-details-label-order-id';
   const dataTestSaleDate = 'seller_order_details__element-order-details-label-order-date';
-  const dataTestSaleStatus = `seller_order_details__
-    element-order-details-label-delivery-status`;
-  const dataTestButtonPreparing = 'seller_order_details__button-preparing-check';
-  const dataTestButtonDispatch = 'seller_order_details__button-dispatch-check';
+  const dataTestSaleStatus = 'seller_order_details__'
+    + 'element-order-details-label-delivery-status';
+  const dataTestPreparingButton = 'seller_order_details__button-preparing-check';
+  const dataTestDispatchButton = 'seller_order_details__button-dispatch-check';
 
   return (
     <>
@@ -47,14 +49,16 @@ function SellerOrdersById() {
               {sale.status}
             </span>
             <button
-              data-testid={ dataTestButtonPreparing }
+              data-testid={ dataTestPreparingButton }
               type="button"
+              disabled={ statusThatDisablesPreparingButton.includes(sale.status) }
             >
               PREPARAR PEDIDO
             </button>
             <button
-              data-testid={ dataTestButtonDispatch }
+              data-testid={ dataTestDispatchButton }
               type="button"
+              disabled={ statusThatDisablesDispatchButton.includes(sale.status) }
             >
               SAIU PARA ENTREGA
             </button>
