@@ -23,9 +23,9 @@ function Customer() {
   }, [setIsFetching]);
 
   return (
-    <div>
+    <div className="flex flex-col justify-center items-center">
       <Header title="Produtos" />
-      <div>
+      <div className="bg-zinc-100 grid grid-cols-4 m-8 rounded p-8 gap-6">
         {
           products?.map((element, i) => (
             (
