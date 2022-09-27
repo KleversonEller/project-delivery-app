@@ -65,6 +65,16 @@ class SalesService {
 
     return { ...sale.dataValues, products: newProducts };
   }
+
+  async updateStatus(id, status) {
+    const updatedSale = await this.model.update({ status }, { where: { id } });
+    
+    if (!updatedSale[0]) throwMyError(StatusCodes.NOT_FOUND, 'Venda não encontrada');
+
+    const sale = await this.getById(id);
+
+    return sale;
+  }
 }
 
 module.exports = new SalesService();
