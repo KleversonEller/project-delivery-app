@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import ProductCheckoutTableRow from './ProductCheckoutTableRow';
 import calculatesTotalPrice from '../helpers/calculatesTotalPrice';
 
-export default function TabelaDespesas() {
+export default function TabelaDespesas(props) {
+  const { products } = props;
+  const { location: { pathname } } = useHistory();
   const [shoppingCart, setShoppingCart] = useState([]);
 
   useEffect(() => {
-    setShoppingCart(JSON.parse(localStorage.getItem('carrinho')) || []);
-  }, []);
+    if (products) {
+      setShoppingCart(products);
+    } else {
+      setShoppingCart(JSON.parse(localStorage.getItem('carrinho')) || []);
+    }
+  }, [products]);
 
   return (
     <div>
@@ -19,7 +27,7 @@ export default function TabelaDespesas() {
             <th>Quabtidade</th>
             <th>Valor Unitário</th>
             <th>Sub-total</th>
-            <th>Remover Item</th>
+            {(pathname === '/customer/checkout') && <th>Remover Item</th>}
           </tr>
         </thead>
 
@@ -46,3 +54,16 @@ export default function TabelaDespesas() {
     </div>
   );
 }
+
+TabelaDespesas.propTypes = {
+  products: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    price: PropTypes.string.isRequired,
+    quantity: PropTypes.number.isRequired,
+  })),
+};
+
+TabelaDespesas.defaultProps = {
+  products: undefined,
+};
