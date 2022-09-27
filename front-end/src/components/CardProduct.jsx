@@ -5,7 +5,6 @@ import manualOperationProduct
   from '../helpers/manualOperationProductToShoppingCart';
 import operationProduct from '../helpers/operationProduct';
 import saveProductAtShoppingCart from '../helpers/saveProductAtShoppingCart';
-import styles from './cardProducts.module.css';
 // import { Link } from 'react-router-dom';
 
 export default function CardFood(props) {
@@ -49,8 +48,11 @@ export default function CardFood(props) {
     //   className="card_container"
     //   style={ { textDecoration: 'none' } }
     // >
-    <div className={ styles['product-card-container'] }>
-      <p data-testid={ `customer_products__element-card-title-${id}` }>
+    <div className="items-center flex flex-col gap-4 mb-6 rounded border p-4 shadow-md">
+      <p
+        className="font-bold"
+        data-testid={ `customer_products__element-card-title-${id}` }
+      >
         {name}
       </p>
       <img
@@ -64,28 +66,33 @@ export default function CardFood(props) {
         {convertToBrazilianCurrency(price)}
       </p>
 
-      <button
-        data-testid={ `customer_products__button-card-rm-item-${id}` }
-        type="button"
-        onClick={ () => handleClick('-') }
-      >
-        -
-      </button>
+      <div>
+        <button
+          className="bg-red-400 rounded p-2 w-10 text-center hover:bg-red-500"
+          data-testid={ `customer_products__button-card-rm-item-${id}` }
+          type="button"
+          onClick={ () => handleClick('-') }
+        >
+          -
+        </button>
 
-      <input
-        type="text"
-        data-testid={ `customer_products__input-card-quantity-${id}` }
-        value={ quantity }
-        onChange={ handleChange }
-      />
+        <input
+          className="bg-zinc-300 rounded p-2 w-10 text-center m-4"
+          type="text"
+          data-testid={ `customer_products__input-card-quantity-${id}` }
+          value={ quantity }
+          onChange={ handleChange }
+        />
 
-      <button
-        data-testid={ `customer_products__button-card-add-item-${id}` }
-        type="button"
-        onClick={ () => handleClick('+') }
-      >
-        +
-      </button>
+        <button
+          className="bg-green-400 rounded p-2 w-10 text-center hover:bg-green-500"
+          data-testid={ `customer_products__button-card-add-item-${id}` }
+          type="button"
+          onClick={ () => handleClick('+') }
+        >
+          +
+        </button>
+      </div>
     </div>
     // </Link>
   );
