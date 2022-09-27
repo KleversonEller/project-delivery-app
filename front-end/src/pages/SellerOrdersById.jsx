@@ -5,16 +5,17 @@ import TabelaDespesas from '../components/TabelaDespesas';
 import convertDate from '../helpers/convertDate';
 import getFromLocalStorage from '../helpers/getFromLocalStorage';
 import requestGetByIdSale from '../services/requestGetByIdSale';
+import requestUpdateSaleStatus from '../services/requestUpdateSaleStatus';
 
 function SellerOrdersById() {
   const [sale, setSale] = useState(null);
   const { id: saleId } = useParams();
-  const statusThatDisablesPreparingButton = ['Preparando', 'Trânsito', 'Entregue'];
-  const statusThatDisablesDispatchButton = ['Pendente', 'Trânsito', 'Entregue'];
+  const { token } = getFromLocalStorage('user');
+  const pendente = 'Pendente';
+  const preparando = 'Preparando';
+  const transito = 'Em Trânsito';
 
   useEffect(() => {
-    const { token } = getFromLocalStorage('user');
-
     const getSale = async () => {
       const request = await requestGetByIdSale(token, saleId);
 
@@ -22,7 +23,16 @@ function SellerOrdersById() {
     };
 
     getSale();
-  }, [saleId]);
+  }, [token, saleId]);
+
+  const updateStatus = async (status) => {
+    const request = await requestUpdateSaleStatus(token, saleId, status);
+    if (request.message) return console.log(request.message);
+
+    const requestNewSale = await requestGetByIdSale(token, saleId);
+
+    setSale(requestNewSale);
+  };
 
   console.log(sale);
   const dataTestSaleId = 'seller_order_details__element-order-details-label-order-id';
@@ -51,14 +61,16 @@ function SellerOrdersById() {
             <button
               data-testid={ dataTestPreparingButton }
               type="button"
-              disabled={ statusThatDisablesPreparingButton.includes(sale.status) }
+              onClick={ () => updateStatus(preparando) }
+              disabled={ sale.status !== pendente }
             >
               PREPARAR PEDIDO
             </button>
             <button
               data-testid={ dataTestDispatchButton }
               type="button"
-              disabled={ statusThatDisablesDispatchButton.includes(sale.status) }
+              onClick={ () => updateStatus(transito) }
+              disabled={ sale.status !== preparando }
             >
               SAIU PARA ENTREGA
             </button>
