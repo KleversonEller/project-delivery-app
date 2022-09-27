@@ -24,12 +24,10 @@ export default function Login() {
   }, [userEmail, password, history]);
 
   useEffect(() => {
-    if (history.location.pathname === '/login'
-    && JSON.parse(localStorage.getItem('user'))) {
-      history.push('/login');
+    if (JSON.parse(localStorage.getItem('user'))) {
       history.push('/customer/products');
     }
-  }, []);
+  }, [history]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
