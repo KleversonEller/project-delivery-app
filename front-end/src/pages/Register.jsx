@@ -39,9 +39,14 @@ function Register() {
   };
 
   return (
-    <>
-      <form onSubmit={ handleSubmit }>
+    <div className="w-screen h-screen flex items-center justify-center">
+      <form
+        className={ `bg-zinc-300 flex flex-col h-3/4
+        w-2/5 rounded items-center py-20 justify-between` }
+        onSubmit={ handleSubmit }
+      >
         <Input
+          className="bg-zinc-400 rounded h-8 placeholder:text-zinc-600 p-3"
           type="text"
           data-testid="common_register__input-name"
           id="name"
@@ -50,6 +55,7 @@ function Register() {
           onChange={ ({ target }) => setName(target.value) }
         />
         <Input
+          className="bg-zinc-400 rounded h-8 placeholder:text-zinc-600 p-3"
           type="text"
           data-testid="common_register__input-email"
           id="email"
@@ -58,6 +64,7 @@ function Register() {
           onChange={ ({ target }) => setEmail(target.value) }
         />
         <Input
+          className="bg-zinc-400 rounded h-8 placeholder:text-zinc-600 p-3"
           type="password"
           data-testid="common_register__input-password"
           id="password"
@@ -66,6 +73,8 @@ function Register() {
           onChange={ ({ target }) => setPassword(target.value) }
         />
         <Button
+          className={ `bg-green-500 rounded h-12 w-36
+          hover:bg-green-400 disabled:bg-zinc-600` }
           type="submit"
           data-testid="common_register__button-register"
           disabled={ !formFieldsAreValid }
@@ -79,7 +88,7 @@ function Register() {
           dataTestId="common_register__element-invalid_register"
         />
       )}
-    </>
+    </div>
   );
 }
 
