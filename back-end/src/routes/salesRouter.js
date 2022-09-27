@@ -12,6 +12,12 @@ router.post(
 );
 
 router.get(
+  '/sales',
+  authenticationMiddleware,
+  (req, res) => salesController.getAllByUserId(req, res),
+);
+
+router.get(
   '/sales/:id',
   authenticationMiddleware,
   (req, res) => salesController.getById(req, res),
