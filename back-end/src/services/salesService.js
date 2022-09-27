@@ -49,8 +49,8 @@ class SalesService {
     const sale = await this.model.findOne({
       where: { id },
       include: [{
-        model: productsModel, as: 'products', through: { attributes: [] }
-      }]
+        model: productsModel, as: 'products', through: { attributes: [] },
+      }],
     });
 
     if (!sale) throwMyError(StatusCodes.NOT_FOUND, 'Venda não encontrada');
@@ -61,7 +61,7 @@ class SalesService {
     const { products } = sale.dataValues;
 
     const newProducts = products.map((product, index) => (
-      { ...product.dataValues, quantity:  salesProducts[index].quantity}));
+      { ...product.dataValues, quantity: salesProducts[index].quantity }));
 
     return { ...sale.dataValues, products: newProducts };
   }
