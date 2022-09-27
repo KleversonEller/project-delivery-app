@@ -9,7 +9,7 @@ const requestGetAllSales = async (token) => {
         Authorization: token,
       },
     });
-    const result = response.json();
+    const result = await response.json();
 
     return result;
   } catch (err) {
