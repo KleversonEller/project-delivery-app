@@ -11,8 +11,6 @@ function ProductCheckoutTableaddressDetails() {
   const [sellerId, setSellerId] = useState(0);
   const history = useHistory();
 
-  console.log(sellerId);
-
   useEffect(() => {
     if (sellers.length > 0) setSellerId(sellers[0].id);
   }, [sellers]);
