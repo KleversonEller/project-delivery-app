@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import convertToBrazilianCurrency from '../helpers/convertToBrazilianCurrency';
 
 export default function CardOrder(props) {
   const { sales, page } = props;
@@ -26,7 +27,7 @@ export default function CardOrder(props) {
             type="button"
             onClick={ () => redirect(element) }
           >
-            <p data-testid={ `${page}-order-id-${element.id}` }>
+            <p data-testid={ `${page}_orders__element-order-id-${element.id}` }>
               {element.id}
             </p>
             <p data-testid={ `${page}_orders__element-delivery-status-${element.id}` }>
@@ -36,7 +37,7 @@ export default function CardOrder(props) {
               {formatDate(element.saleDate)}
             </p>
             <p data-testid={ `${page}_orders__element-card-price-${element.id}` }>
-              {element.totalPrice.toString().replace('.', ',')}
+              {convertToBrazilianCurrency(element.totalPrice)}
             </p>
             {(page === 'seller') && (
               <p data-testid={ `${page}_orders__element-card-address-${element.id}` }>
