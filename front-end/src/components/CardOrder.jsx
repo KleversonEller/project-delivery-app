@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 export default function CardOrder(props) {
@@ -13,23 +14,31 @@ export default function CardOrder(props) {
     console.log(format);
     return format;
   };
+  const history = useHistory();
+
+  const redirect = (element) => history.push(`/customer/orders/${element.id}`);
 
   return (
     <div>
       {sales?.map((element, i) => (
         <div key={ i }>
-          <p data-testid={ `customer_orders__element-order-id-${element.id}` }>
-            {element.id}
-          </p>
-          <p data-testid={ `customer_orders__element-delivery-status-${element.id}` }>
-            {element.status}
-          </p>
-          <p data-testid={ `customer_orders__element-order-date-${element.id}` }>
-            {formatDate(element.saleDate)}
-          </p>
-          <p data-testid={ `customer_orders__element-card-price-${element.id}` }>
-            {element.totalPrice.toString().replace('.', ',')}
-          </p>
+          <button
+            type="button"
+            onClick={ () => redirect(element) }
+          >
+            <p data-testid={ `customer_orders__element-order-id-${element.id}` }>
+              {element.id}
+            </p>
+            <p data-testid={ `customer_orders__element-delivery-status-${element.id}` }>
+              {element.status}
+            </p>
+            <p data-testid={ `customer_orders__element-order-date-${element.id}` }>
+              {formatDate(element.saleDate)}
+            </p>
+            <p data-testid={ `customer_orders__element-card-price-${element.id}` }>
+              {element.totalPrice.toString().replace('.', ',')}
+            </p>
+          </button>
         </div>
       ))}
 
