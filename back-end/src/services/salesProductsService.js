@@ -20,7 +20,6 @@ class SalesProductsService {
   async getBySaleId(saleId) {
     return this.model.findAll({ 
       where: { saleId },
-      attributes: { exclude: ['saleId'] },
     });
   }
 
