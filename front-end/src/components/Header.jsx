@@ -10,25 +10,36 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="header">
+    <header
+      className={ `header bg-zinc-300 flex justify-around w-full
+    h-20 items-center font-bold` }
+    >
       <Link to="/customer/products">
-        <h2 data-testid="customer_products__element-navbar-link-products">
+        <h2
+          className="shadow-xl rounded"
+          data-testid="customer_products__element-navbar-link-products"
+        >
           PRODUTOS
         </h2>
       </Link>
       <Link to="/customer/orders">
         <button
+          className="shadow-xl rounded"
           data-testid="customer_products__element-navbar-link-orders"
           type="button"
         >
           MEUS PEDIDOS
         </button>
       </Link>
-      <h2 data-testid="customer_products__element-navbar-user-full-name">
+      <h2
+        className="shadow-xl rounded"
+        data-testid="customer_products__element-navbar-user-full-name"
+      >
         {header.name}
       </h2>
       <Link to="/">
         <button
+          className="shadow-xl rounded"
           data-testid="customer_products__element-navbar-link-logout"
           type="button"
           onClick={ () => localStorage.clear('user') }
