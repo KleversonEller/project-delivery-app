@@ -45,9 +45,9 @@ export default function Login() {
   };
 
   return (
-    <div className="flex justify-center mt-16">
+    <div className="w-screen h-screen flex items-center justify-center">
       <form
-        className="flex flex-col items-center p-6 bg-zinc-300 rounded gap-2"
+        className="flex flex-col items-center p-6 bg-zinc-300 rounded gap-2 w-2/5"
         onSubmit={ handleSubmit }
       >
         <section>
