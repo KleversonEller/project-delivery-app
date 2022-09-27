@@ -7,11 +7,10 @@ import ProductCheckoutTableaddressDetails
 import requestGetAllSellers from '../services/requestGetAllSellers';
 
 function Checkout() {
-  const { sellers, setSellers } = useContext(MyContext);
+  const { setSellers } = useContext(MyContext);
   const [requestError, setRequestError] = useState('');
 
   console.log(requestError);
-  console.log(sellers);
 
   useEffect(() => {
     const getSellers = async () => {
@@ -21,7 +20,7 @@ function Checkout() {
       setSellers(sellerList);
     };
     getSellers();
-  }, []);
+  }, [setSellers]);
 
   return (
     <div>
