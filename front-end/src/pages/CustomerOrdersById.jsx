@@ -9,20 +9,22 @@ import requestGetByIdSales from '../services/requestGetByIdSale';
 function CustomerOrders() {
   const { sellers } = useContext(MyContext);
   const [shoppingCart, setShoppingCart] = useState([]);
+  const [dates, setDates] = useState('');
   const [salesById, setSalesById] = useState({});
   const { id } = useParams();
-
+  const ten = 10;
   useEffect(() => {
     const handle = async () => {
       const { token } = JSON.parse(localStorage.getItem('user'));
       setShoppingCart(JSON.parse(localStorage.getItem('carrinho')) || []);
       const saleById = await requestGetByIdSales(token, id);
-      console.log(saleById);
+      const date = saleById.saleDate.slice(0, ten).split('-').reverse().join('/');
+      console.log(date);
+      setDates(date);
       setSalesById(saleById);
     };
     handle();
   }, [id]);
-
   // console.log(sellers);
   // console.log(salesById);
 
@@ -34,13 +36,13 @@ function CustomerOrders() {
       <Header />
       <h1>Detalhe do Pedido</h1>
       <div>
+        <h2
+          data-testid="customer_order_details__element-order-details-label-order-id"
+        >
+          {salesById?.id }
+        </h2>
         {sellers?.map((ele, i) => (
           <div key={ i }>
-            <h2
-              data-testid="customer_products__element-order-date-id"
-            >
-              {ele.id}
-            </h2>
             <h2
               data-testid={ dataIdName }
             >
@@ -48,11 +50,14 @@ function CustomerOrders() {
             </h2>
           </div>
         ))}
-        <h2 data-testid={ dataIdDate }>{salesById?.saleDate}</h2>
+        <h2 data-testid={ dataIdDate }>
+          {dates || ''}
+        </h2>
         <h2 data-testid={ idStatus }>{salesById?.status}</h2>
         <button
           type="button"
           data-testid="customer_order_details__button-delivery-check"
+          disabled
         >
           MARCAR COMO ENTREGUE
 
@@ -71,7 +76,7 @@ function CustomerOrders() {
         </tbody>
       </div>
       <p
-        data-testid="customer_checkout__element-order-total-price"
+        data-testid="customer_order_details__element-order-total-price"
       >
         {(calculatesTotalPrice(shoppingCart).toFixed(2)).replace('.', ',')}
 
