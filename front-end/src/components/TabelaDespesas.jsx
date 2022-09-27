@@ -3,11 +3,15 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import ProductCheckoutTableRow from './ProductCheckoutTableRow';
 import calculatesTotalPrice from '../helpers/calculatesTotalPrice';
+import convertToBrazilianCurrency from '../helpers/convertToBrazilianCurrency';
 
 export default function TabelaDespesas(props) {
   const { products } = props;
   const { location: { pathname } } = useHistory();
   const [shoppingCart, setShoppingCart] = useState([]);
+
+  const pageUser = (pathname.includes('customer') ? 'customer' : 'seller');
+  const pageType = (pathname.includes('checkout') ? 'checkout' : 'order_details');
 
   useEffect(() => {
     if (products) {
@@ -27,7 +31,7 @@ export default function TabelaDespesas(props) {
             <th>Quabtidade</th>
             <th>Valor Unitário</th>
             <th>Sub-total</th>
-            {(pathname === '/customer/checkout') && <th>Remover Item</th>}
+            {(pageUser === 'customer') && <th>Remover Item</th>}
           </tr>
         </thead>
 
@@ -46,9 +50,9 @@ export default function TabelaDespesas(props) {
 
       </table>
       <p
-        data-testid="customer_checkout__element-order-total-price"
+        data-testid={ `${pageUser}_${pageType}__element-order-total-price` }
       >
-        {(calculatesTotalPrice(shoppingCart).toFixed(2)).replace('.', ',')}
+        {convertToBrazilianCurrency(calculatesTotalPrice(shoppingCart))}
 
       </p>
     </div>
