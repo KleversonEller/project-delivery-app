@@ -21,7 +21,7 @@ function CustomerOrders() {
   return (
     <div>
       <Header />
-      <CardOrder sales={ sales } />
+      <CardOrder sales={ sales } page="customer" />
     </div>
   );
 }
