@@ -8,7 +8,8 @@ function ProductCheckoutTableRow(props) {
   const { element, setShoppingCart, i } = props;
   const { id, name, price, quantity } = element;
   const carrinho = 'carrinho';
-  const pageName = (pathname.includes('checkout') ? 'checkout' : 'order_details');
+  const pageUser = (pathname.includes('customer') ? 'customer' : 'seller');
+  const pageType = (pathname.includes('checkout') ? 'checkout' : 'order_details');
 
   const removeProduct = () => {
     const localStorageProducts = JSON.parse(localStorage.getItem(carrinho));
@@ -21,27 +22,27 @@ function ProductCheckoutTableRow(props) {
   return (
     <tr key={ i }>
       <td
-        data-testid={ `customer_${pageName}__element-order-table-item-number-${i}` }
+        data-testid={ `${pageUser}_${pageType}__element-order-table-item-number-${i}` }
       >
         {i + 1}
       </td>
       <td
-        data-testid={ `customer_${pageName}__element-order-table-name-${i}` }
+        data-testid={ `${pageUser}_${pageType}__element-order-table-name-${i}` }
       >
         {name}
       </td>
       <td
-        data-testid={ `customer_${pageName}__element-order-table-quantity-${i}` }
+        data-testid={ `${pageUser}_${pageType}__element-order-table-quantity-${i}` }
       >
         {quantity}
       </td>
       <td
-        data-testid={ `customer_${pageName}__element-order-table-unit-price-${i}` }
+        data-testid={ `${pageUser}_${pageType}__element-order-table-unit-price-${i}` }
       >
         {price.replace('.', ',')}
       </td>
       <td
-        data-testid={ `customer_${pageName}__element-order-table-sub-total-${i}` }
+        data-testid={ `${pageUser}_${pageType}__element-order-table-sub-total-${i}` }
       >
         {convertToBrazilianCurrency(quantity * price)}
       </td>
