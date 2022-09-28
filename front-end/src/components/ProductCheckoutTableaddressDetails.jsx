@@ -36,8 +36,9 @@ function ProductCheckoutTableaddressDetails() {
   };
 
   return (
-    <div>
+    <div className="flex items-center justify-center gap-6 mb-10">
       <select
+        className="bg-zinc-400 rounded h-8"
         data-testid="customer_checkout__select-seller"
         onChange={ ({ target }) => setSellerId(target.value) }
       >
@@ -46,18 +47,22 @@ function ProductCheckoutTableaddressDetails() {
         ))}
       </select>
       <input
+        className="bg-zinc-400 rounded h-8 placeholder:text-zinc-600 p-3"
         type="text"
         data-testid="customer_checkout__input-address"
         value={ address }
         onChange={ (e) => setAddress(e.target.value) }
       />
       <input
+        className="bg-zinc-400 rounded h-8 placeholder:text-zinc-600 p-3"
         type="number"
         data-testid="customer_checkout__input-address-number"
         value={ addressNumber }
         onChange={ (e) => setAddressNumber(e.target.value) }
       />
       <button
+        className={ `bg-green-400 rounded h-10 w-60
+        hover:bg-green-500 disabled:bg-zinc-600` }
         type="button"
         data-testid="customer_checkout__button-submit-order"
         onClick={ finishSale }
