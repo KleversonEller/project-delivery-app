@@ -43,8 +43,8 @@ class UserService {
       throwMyError(StatusCodes.CONFLICT, 'O usuário já possui cadastro');
     }
     const result = await this.model.create({ ...user, password: passwordHash });
-    return result
+    return result;
   }
-};
+}
 
 module.exports = new UserService();
