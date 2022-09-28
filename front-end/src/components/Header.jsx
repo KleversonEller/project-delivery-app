@@ -6,6 +6,14 @@ import getFromLocalStorage from '../helpers/getFromLocalStorage';
 export default function Header() {
   const { role, name } = getFromLocalStorage('user') || {};
 
+  const headerRole = () => {
+    if (role === 'customer') {
+      return 'MEUS PEDIDOS';
+    } if (role === 'seller') {
+      return 'PEDIDOS';
+    }
+    return 'GERENCIAR USUÁRIOS';
+  };
   return (
     <header
       className={ `header bg-zinc-300 flex justify-around w-full
@@ -26,7 +34,7 @@ export default function Header() {
           data-testid="customer_products__element-navbar-link-orders"
           type="button"
         >
-          {(role === 'customer') ? 'MEUS PEDIDOS' : 'PEDIDOS'}
+          {headerRole()}
         </button>
       </Link>
       <h2

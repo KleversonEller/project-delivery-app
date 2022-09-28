@@ -34,6 +34,17 @@ class UserService {
 
     return result;
   }
+
+  async registerAdmin(user) {
+    console.log(user);
+    const { password } = user;
+    const passwordHash = encryptPassword(password);
+    if (await this.model.findOne({ where: { email: user.email } })) {
+      throwMyError(StatusCodes.CONFLICT, 'O usuário já possui cadastro');
+    }
+    const result = await this.model.create({ ...user, password: passwordHash });
+    return result;
+  }
 }
 
 module.exports = new UserService();
