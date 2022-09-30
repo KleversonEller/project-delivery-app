@@ -49,6 +49,7 @@ function ProductCheckoutTableRow(props) {
       {(pathname === '/customer/checkout') && (
         <td>
           <button
+            className="bg-red-400 rounded p-1 w-auto text-center hover:bg-red-500"
             type="button"
             onClick={ removeProduct }
             data-testid={ `customer_checkout__element-order-table-remove-${i}` }

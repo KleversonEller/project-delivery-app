@@ -23,15 +23,21 @@ export default function TabelaDespesas(props) {
 
   return (
     <div>
-      <table>
+      <table className="border-separate border-spacing-2 border shadow">
         <thead>
           <tr>
-            <th>Item</th>
-            <th>Descrição</th>
-            <th>Quabtidade</th>
-            <th>Valor Unitário</th>
-            <th>Sub-total</th>
-            {(pageUser === 'customer') && <th>Remover Item</th>}
+            <th className="border shadow px-2 rounded">Item</th>
+            <th className="border shadow px-2 rounded">Descrição</th>
+            <th className="border shadow px-2 rounded">Quabtidade</th>
+            <th className="border shadow px-2 rounded">Valor Unitário</th>
+            <th className="border shadow px-2 rounded">Sub-total</th>
+            {(pageUser === 'customer')
+            && (
+              <th
+                className="border shadow px-2 rounded"
+              >
+                Remover Item
+              </th>)}
           </tr>
         </thead>
 
@@ -50,10 +56,10 @@ export default function TabelaDespesas(props) {
 
       </table>
       <p
+        className="text-end mt-5 text-2xl px-10"
         data-testid={ `${pageUser}_${pageType}__element-order-total-price` }
       >
         {convertToBrazilianCurrency(calculatesTotalPrice(shoppingCart))}
-
       </p>
     </div>
   );
