@@ -3,6 +3,7 @@ const { users: usersModel } = require('../database/models/index');
 const { encryptPassword } = require('../utils/md5');
 const { createToken } = require('../utils/jwt');
 const throwMyError = require('../utils/throwMyError');
+const { Op } = require("sequelize");
 const LoginValidate = require('../validations/loginValidate');
 
 class UserService {
@@ -43,6 +44,18 @@ class UserService {
       throwMyError(StatusCodes.CONFLICT, 'O usuário já possui cadastro');
     }
     const result = await this.model.create({ ...user, password: passwordHash });
+    return result;
+  }
+
+  async getAllUser() {
+    const result = await this.model.findAll({
+      where: {
+        [Op.or]: [
+          {role: 'seller' },
+          {role: 'customer' }
+        ]
+      }
+    });
     return result;
   }
 }
