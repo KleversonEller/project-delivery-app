@@ -22,6 +22,11 @@ class UserController {
     const result = await this.service.registerAdmin(user);
     res.status(201).json(result);
   }
+   
+  async getAllUser(req, res) {
+    const result = await this.service.getAllUser();
+    res.status(201).json(result);
+  }
 }
 
 module.exports = new UserController();
