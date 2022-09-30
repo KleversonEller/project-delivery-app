@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import requestGetAllUser from '../services/requestGetAlUser';
 
-export default function TabelaRegister() {
+export default function TableRegister() {
   const [user, setUser] = useState([]);
 
   const handle = async () => {

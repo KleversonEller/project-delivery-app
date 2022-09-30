@@ -8,6 +8,7 @@ import * as registerFormValidate from '../validations/registerFormValidate';
 // import userRoutes from '../helpers/userRoutes';
 import requestAdminCreateUser from '../services/requestAdminCreateUser';
 import Header from '../components/Header';
+import TableRegister from '../components/tableRegister';
 
 function Manage() {
   // const history = useHistory();
@@ -108,6 +109,7 @@ function Manage() {
           />
         )}
       </div>
+      <TableRegister />
     </>
   );
 }
