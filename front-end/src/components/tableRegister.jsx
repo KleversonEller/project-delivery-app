@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import requestDeleteUser from '../services/requestDeleteUser';
 import requestGetAllUser from '../services/requestGetAlUser';
+import getFromLocalStorage from '../helpers/getFromLocalStorage';
 
 export default function TableRegister() {
   const [user, setUser] = useState([]);
@@ -7,6 +9,12 @@ export default function TableRegister() {
   const handle = async () => {
     const result = await requestGetAllUser();
     setUser(result);
+  };
+
+  const removeUser = async (email) => {
+    console.log(email);
+    const { token } = getFromLocalStorage('user');
+    await requestDeleteUser(email, token);
   };
   useEffect(() => {
     handle();
@@ -50,6 +58,7 @@ export default function TableRegister() {
               <td>
                 <button
                   type="button"
+                  onClick={ () => removeUser(element.email) }
                   data-testid={ `admin_manage__element-user-table-remove-${i}` }
                 >
                   Remover
