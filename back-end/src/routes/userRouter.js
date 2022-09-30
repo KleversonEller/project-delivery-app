@@ -13,4 +13,9 @@ router.post(
   authenticationMiddleware,
   (req, res) => UserController.registerAdmin(req, res),
 );
+router.delete(
+  '/user/delete', 
+  authenticationMiddleware,
+  (req, res) => UserController.deleteUser(req, res),
+);
 module.exports = router;
