@@ -47,12 +47,12 @@ function Manage() {
   };
 
   return (
-    <>
+    <div className="w-screen h-screen flex flex-col items-center">
       <Header />
-      <div className="w-screen h-screen flex items-center justify-center">
+      <div>
         <form
           className={ `bg-zinc-300 flex flex-col h-3/4
-        w-2/5 rounded items-center py-20 justify-between` }
+          w-2/5 rounded items-center py-20 justify-between mt-10` }
           onSubmit={ handleSubmit }
         >
           <Input
@@ -83,6 +83,7 @@ function Manage() {
             onChange={ ({ target }) => setPassword(target.value) }
           />
           <select
+            className="bg-zinc-400 rounded h-8 px-3 w-1/2"
             data-testid="admin_manage__select-role"
             id="role"
             type="role"
@@ -94,7 +95,7 @@ function Manage() {
           </select>
           <Button
             className={ `bg-green-500 rounded h-12 w-36
-          hover:bg-green-400 disabled:bg-zinc-600` }
+            hover:bg-green-400 disabled:bg-zinc-600` }
             type="submit"
             data-testid="admin_manage__button-register"
             disabled={ !formFieldsAreValid }
@@ -110,7 +111,7 @@ function Manage() {
         )}
       </div>
       <TableRegister />
-    </>
+    </div>
   );
 }
 
